@@ -6,8 +6,7 @@
 
 ## Part 1: COINS DETECTION & SEGMENTATION & COUNTING USING OPENCV 
 
-### Project Steps:
-## METHOD 1 : 
+## METHOD 1 : CANNY EDGE DETECTOR
  **1. Preprocessing the Images:**
  ###  IMG NAME : coins1.png
 - Images are read and resized to 500x500 for consistency.
@@ -44,9 +43,10 @@
 -------------------------------------------------------------------------------------------------
 
 
-## METHOD 2 :
+## METHOD 2 : DIFFERENCE OF GAUSSIANS
 ###  IMG NAME : farcoins.png
--Tried this method to find the edges perfectly (also used Canny over DOG to check performance)
+-Tried this method to find the edges perfectly (also used Canny over DOG to check performance).
+
  **1. Difference of Gaussians (DoG):**
 
 -	Two Gaussian blurs with different sigma values are subtracted to highlight the coin edges.
