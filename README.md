@@ -4,7 +4,7 @@
 -------------------------------------------------------------------------------------------------
 
 
-## Part1:COINS DETECTION &SEGMENTATION USING OPENCV 
+## Part 1:COINS DETECTION & SEGMENTATION & COUNTING USING OPENCV 
 
 ### Project Steps:
 
@@ -60,15 +60,34 @@
 -------------------------------------------------------------------------------------------------
 
 
-## Part 2: Create a panorama from multiple overlapping images.
+## Part 2: PANAROMA {KEY POINT DETECTION  & IMAGE STICHING}
 
 ### Project Steps:
+- **Images:**
+   -Resized the images to 500x500 pixels to ensure they are the same size before processing.
+- **Key points:**
+   - Named the images in the order from left to right and converting into gray scale
+   - Using SIFT algorithm to detect key points and descriptors of the image.
+
+- **Image Stitching:**
+   - Applied FLANN algorithm to find the common keypoints in images.
+   - Using Lowe's ratio test found good matches.
+   - Drawn the matches between the keypoints of the center and left images and displays them.
+   - Computed homographies of the images using RANSAC to deal with outliers and also aligned images for perspective transformation.
+   - Estimated transformations to warp images into a common coordinate system and adjusted the output panorama size based on transformed corner coordinates.
+   - Created an averaged column for smoother blending between the images at the joining area (around column 500).
+   - Performed a weighted average blending along a blend_width (5 pixels) to merge the two images smoothly at the transition area.
+   - Warped images using the translation matrix to align images and blended them into a single panoramic view.
+   - First, created a panorama between center and left images, then created a final panorama by adding the right image to the already created panorama.
 
 
-
-
-
-
-
-
+ ### How to Run:
+1. Ensure you have OpenCV :  
+   ```sh
+   pip install opencv-python
+   pip install numpy
+2. Make sure to update the input image path in the code as per directory structure.
+3. Open the terminal and run:
+   ```sh
+   python panaroma.py
 Run the Python file in any IDE or terminal.
