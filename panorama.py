@@ -42,6 +42,8 @@ def pano_creation(center,left):
         if m.distance < 0.7 * n.distance:
             good_matches.append(m)
     
+    matched_img = cv2.drawMatches(center, keypoints1, left, keypoints2, good_matches, None, flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+    
     
     if len(good_matches) > 4:
         src_pts = np.float32([keypoints1[m.queryIdx].pt for m in good_matches]).reshape(-1, 1, 2)
@@ -67,11 +69,16 @@ def pano_creation(center,left):
         alpha = i / blend_width
         panorama[:, width - blend_width + i] = (panorama[:, width - blend_width + i] * (1 - alpha) + panorama[:, width + i] * alpha).astype(np.uint8)
         # panorama[:, width + blend_width - i] = (panorama[:, width - blend_width + i] * (alpha) + panorama[:, width + i] * (1-alpha)).astype(np.uint8)
-    return panorama
+    return panorama,matched_img
 
-panorama=pano_creation(center, left)
-pano_final=pano_creation(right, panorama)
-cv2.imshow('panorama',pano_final)
+panorama,matched_1st=pano_creation(center, left)
+cv2.imshow('Matched_Keypoints_center_left', matched_1st)
+pano_final,matched_2nd=pano_creation(right, panorama)
+cv2.imshow('Matched_Keypoints_final',matched_2nd)
+cv2.imwrite('C:/Users/irfan/OneDrive/Desktop/MTECH-2ND SEM/VR/assignment 1/panorama_images/pano_output_image/Matched_Keypoints_center_left.jpg', matched_1st)
+cv2.imwrite('C:/Users/irfan/OneDrive/Desktop/MTECH-2ND SEM/VR/assignment 1/panorama_images/pano_output_image/Matched_Keypoints_final.jpg', matched_2nd)
+
+cv2.imwrite('C:/Users/irfan/OneDrive/Desktop/MTECH-2ND SEM/VR/assignment 1/panorama_images/pano_output_image/pano_image.jpg', pano_final)
 
 
 
