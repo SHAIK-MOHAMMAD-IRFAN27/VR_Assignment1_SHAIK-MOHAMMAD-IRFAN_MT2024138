@@ -10,10 +10,12 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-center=cv2.imread("C:/Users/irfan/OneDrive/Desktop/MTECH-2ND SEM/VR/assignment 1/center.jpeg")
-left=cv2.imread("C:/Users/irfan/OneDrive/Desktop/MTECH-2ND SEM/VR/assignment 1/left.jpeg")
-right=cv2.imread("C:/Users/irfan/OneDrive/Desktop/MTECH-2ND SEM/VR/assignment 1/right.jpeg")
-
+# center=cv2.imread("C:/Users/irfan/OneDrive/Desktop/MTECH-2ND SEM/VR/assignment 1/panorama_images/pano_input_images/center.jpeg")
+# left=cv2.imread("C:/Users/irfan/OneDrive/Desktop/MTECH-2ND SEM/VR/assignment 1/panorama_images/pano_input_images/left.jpeg")
+# right=cv2.imread("C:/Users/irfan/OneDrive/Desktop/MTECH-2ND SEM/VR/assignment 1/panorama_images/pano_input_images/right.jpeg")
+center = cv2.imread("C:/Users/irfan/OneDrive/Desktop/MTECH-2ND SEM/VR/assignment 1/panorama_images/pano_input_images/center2.jpeg")
+left = cv2.imread("C:/Users/irfan/OneDrive/Desktop/MTECH-2ND SEM/VR/assignment 1/panorama_images/pano_input_images/left2.jpeg")
+right = cv2.imread("C:/Users/irfan/OneDrive/Desktop/MTECH-2ND SEM/VR/assignment 1/panorama_images/pano_input_images/right2.jpeg")
 center=cv2.resize(center, (500,500))
 left=cv2.resize(left, (500,500))
 right=cv2.resize(right, (500,500))
@@ -63,22 +65,28 @@ def pano_creation(center,left):
     panorama[:, 500] = average_column
     
     panorama[:, 501] = average_column
+    normal_averaging=panorama
     
     blend_width = 5 
     for i in range(blend_width):
         alpha = i / blend_width
         panorama[:, width - blend_width + i] = (panorama[:, width - blend_width + i] * (1 - alpha) + panorama[:, width + i] * alpha).astype(np.uint8)
         # panorama[:, width + blend_width - i] = (panorama[:, width - blend_width + i] * (alpha) + panorama[:, width + i] * (1-alpha)).astype(np.uint8)
-    return panorama,matched_img
+    return panorama,matched_img,normal_averaging
 
-panorama,matched_1st=pano_creation(center, left)
+panorama,matched_1st,normal_averaging_l_c=pano_creation(center, left)
 cv2.imshow('Matched_Keypoints_center_left', matched_1st)
-pano_final,matched_2nd=pano_creation(right, panorama)
+pano_final,matched_2nd,normal_averaging_final=pano_creation(right, panorama)
 cv2.imshow('Matched_Keypoints_final',matched_2nd)
-cv2.imwrite('C:/Users/irfan/OneDrive/Desktop/MTECH-2ND SEM/VR/assignment 1/panorama_images/pano_output_image/Matched_Keypoints_center_left.jpg', matched_1st)
-cv2.imwrite('C:/Users/irfan/OneDrive/Desktop/MTECH-2ND SEM/VR/assignment 1/panorama_images/pano_output_image/Matched_Keypoints_final.jpg', matched_2nd)
+cv2.imshow('pano_final',pano_final)
+# cv2.imwrite('C:/Users/irfan/OneDrive/Desktop/MTECH-2ND SEM/VR/assignment 1/panorama_images/pano_output_image/Matched_Keypoints_center_left.jpg', matched_1st)
+# cv2.imwrite('C:/Users/irfan/OneDrive/Desktop/MTECH-2ND SEM/VR/assignment 1/panorama_images/pano_output_image/Matched_Keypoints_final.jpg', matched_2nd)
+# # cv2.imshow('normal_averaging_final',normal_averaging_final)
+# cv2.imwrite('C:/Users/irfan/OneDrive/Desktop/MTECH-2ND SEM/VR/assignment 1/panorama_images/pano_output_image/pano_image.jpg', pano_final)
+cv2.imwrite('C:/Users/irfan/OneDrive/Desktop/MTECH-2ND SEM/VR/assignment 1/panorama_images/pano_output_image/Matched_Keypoints_center_left_ex2.jpg', matched_1st)
+cv2.imwrite('C:/Users/irfan/OneDrive/Desktop/MTECH-2ND SEM/VR/assignment 1/panorama_images/pano_output_image/Matched_Keypoints_final_ex2.jpg', matched_2nd)
 
-cv2.imwrite('C:/Users/irfan/OneDrive/Desktop/MTECH-2ND SEM/VR/assignment 1/panorama_images/pano_output_image/pano_image.jpg', pano_final)
+cv2.imwrite('C:/Users/irfan/OneDrive/Desktop/MTECH-2ND SEM/VR/assignment 1/panorama_images/pano_output_image/pano_image_ex2.jpg', pano_final)
 
 
 
